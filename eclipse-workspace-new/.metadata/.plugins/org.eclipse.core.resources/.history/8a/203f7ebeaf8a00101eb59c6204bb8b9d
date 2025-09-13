@@ -1,0 +1,75 @@
+package com.nostronido.util;
+
+import com.google.cloud.BaseService;
+import com.nostronido.model.Place;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+@Component
+public class DataSeeder implements CommandLineRunner {
+
+    private final Firestore db;
+
+    public DataSeeder(Firestore firestore) {
+        this.db = firestore;
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        // Verifica se a coleção 'places' está vazia antes de popular
+        if (db.collection("places").get().get(10, TimeUnit.SECONDS).isEmpty()) {
+            System.out.println(">>> Firestore está vazio. Populando com dados de exemplo...");
+
+            Place place1 = Place.builder()
+                .name("Enoteca Decanter")
+                .neighborhood("Moinhos de Vento")
+                .address("R. Dinarte Ribeiro, 125 - Moinhos de Vento")
+                .mainImageUrl("https://example.com/image1.jpg")
+                .curatedDescription("Um charmoso bar de vinhos, perfeito para conversas longas e um primeiro encontro sem pressão.")
+                .proTip("Peça a tábua de frios da casa, harmoniza com quase todos os vinhos.")
+                .budget("budget_$$")
+                .periods(List.of("tarde", "noite"))
+                .dateTypes(List.of("primeiroEncontro", "soParaConversar"))
+                .vibes(List.of("romanticoIntimo", "descontraidoCasual"))
+                .build();
+
+            Place place2 = Place.builder()
+                .name("Passeio na Orla do Guaíba")
+                .neighborhood("Orla")
+                .address("Av. Edvaldo Pereira Paiva - Praia de Belas")
+                .mainImageUrl("https://example.com/image2.jpg")
+                .curatedDescription("Um clássico de Porto Alegre. Ideal para um encontro casual durante o dia, caminhando e apreciando o pôr do sol.")
+                .proTip("Leve uma canga e compre um café nos quiosques para um momento relaxante.")
+                .budget("budget_$")
+                .periods(List.of("manha", "tarde"))
+                .dateTypes(List.of("primeiroEncontro"))
+                .vibes(List.of("aoArLivre", "descontraidoCasual"))
+                .build();
+            
+            Place place3 = Place.builder()
+                .name("Puppi Baggio")
+                .neighborhood("Moinhos de Vento")
+                .address("R. Dinarte Ribeiro, 155 - Moinhos de Vento")
+                .mainImageUrl("https://example.com/image3.jpg")
+                .curatedDescription("Restaurante italiano clássico e sofisticado. Perfeito para comemorar uma data especial com massas incríveis.")
+                .proTip("Faça uma reserva, especialmente para o jantar de fim de semana.")
+                .budget("budget_$$$")
+                .periods(List.of("noite"))
+                .dateTypes(List.of("comemorarAniversario"))
+                .vibes(List.of("romanticoIntimo", "sofisticado"))
+                .build();
+
+            // Salva os documentos no Firestore
+            db.collection("places").add(place1).get();
+            db.collection("places").add(place2).get();
+            db.collection("places").add(place3).get();
+
+            System.out.println(">>> Dados de exemplo inseridos com sucesso!");
+        } else {
+             System.out.println(">>> Firestore já contém dados. Semeador não executado.");
+        }
+    }
+}

@@ -1,0 +1,37 @@
+// Exemplo da classe Place sem Lombok
+public class Place {
+    // ... todos os atributos (name, neighborhood, etc.)
+
+    // Construtor vazio
+    public Place() {}
+
+    // Getters e Setters para todos os atributos
+    // public String getName() { return name; }
+    // public void setName(String name) { this.name = name; }
+    // ... etc para todos os outros ...
+
+    // O método builder que o Lombok cria para nós
+    public static PlaceBuilder builder() {
+        return new PlaceBuilder();
+    }
+
+    // A classe do Builder que o Lombok cria para nós
+    public static class PlaceBuilder {
+        // ... todos os atributos novamente ...
+        
+        PlaceBuilder() {}
+
+        public PlaceBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+        // ... um método para cada atributo ...
+
+        public Place build() {
+            Place place = new Place();
+            place.setName(this.name);
+            // ... setar todos os outros ...
+            return place;
+        }
+    }
+}

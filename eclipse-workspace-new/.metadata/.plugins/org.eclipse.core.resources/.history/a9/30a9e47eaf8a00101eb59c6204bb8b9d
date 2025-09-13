@@ -1,0 +1,28 @@
+package com.nostronido.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Place {
+    private String name;
+    private String neighborhood;
+    private String address;
+    private String mainImageUrl;
+    private List<String> galleryImageUrls;
+    private String curatedDescription;
+    private String proTip;
+    private String googleMapsUrl;
+    private String reservationUrl;
+    private String budget;
+    private List<String> periods;
+    private List<String> dateTypes;
+    private List<String> vibes;
+}

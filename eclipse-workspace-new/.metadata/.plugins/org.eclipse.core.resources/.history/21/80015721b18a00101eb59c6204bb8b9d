@@ -1,0 +1,72 @@
+package com.nostronido.model;
+
+import java.util.List;
+import java.util.Objects;
+
+public class Place {
+
+    // --- 1. ATRIBUTOS (Fields) ---
+    private String name;
+    private String neighborhood;
+    private String address;
+    private String mainImageUrl;
+    private List<String> galleryImageUrls;
+    private String curatedDescription;
+    private String proTip;
+    private String googleMapsUrl;
+    private String reservationUrl;
+    private String budget;
+    private List<String> periods;
+    private List<String> dateTypes;
+    private List<String> vibes;
+
+    // --- 2. CONSTRUTORES (Constructors) ---
+
+    /**
+     * Construtor público sem argumentos.
+     * Necessário para frameworks e bibliotecas de serialização.
+     */
+    public Place() {
+    }
+
+    /**
+     * Construtor privado que recebe o Builder.
+     * Usado internamente pelo padrão Builder para construir o objeto.
+     */
+    private Place(PlaceBuilder builder) {
+        this.name = builder.name;
+        this.neighborhood = builder.neighborhood;
+        this.address = builder.address;
+        this.mainImageUrl = builder.mainImageUrl;
+        this.galleryImageUrls = builder.galleryImageUrls;
+        this.curatedDescription = builder.curatedDescription;
+        this.proTip = builder.proTip;
+        this.googleMapsUrl = builder.googleMapsUrl;
+        this.reservationUrl = builder.reservationUrl;
+        this.budget = builder.budget;
+        this.periods = builder.periods;
+        this.dateTypes = builder.dateTypes;
+        this.vibes = builder.vibes;
+    }
+
+
+    // --- 3. GETTERS E SETTERS ---
+    // Métodos para acessar e modificar cada um dos atributos.
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getNeighborhood() { return neighborhood; }
+    public void setNeighborhood(String neighborhood) { this.neighborhood = neighborhood; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+
+    public String getMainImageUrl() { return mainImageUrl; }
+    public void setMainImageUrl(String mainImageUrl) { this.mainImageUrl = mainImageUrl; }
+
+    public List<String> getGalleryImageUrls() { return galleryImageUrls; }
+    public void setGalleryImageUrls(List<String> galleryImageUrls) { this.galleryImageUrls = galleryImageUrls; }
+
+    public String getCuratedDescription() { return curatedDescription; }
+    public void setCuratedDescription(String curatedDescription) { this.curated

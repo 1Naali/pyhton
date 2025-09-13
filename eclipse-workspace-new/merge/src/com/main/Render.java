@@ -1,0 +1,39 @@
+package com.main;
+
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+
+public class Render {
+
+    private Canvas canvas;
+
+    public Render(Canvas canvas) {
+        this.canvas = canvas;
+    }
+	
+	public void render() {
+		BufferStrategy bs = canvas.getBufferStrategy();
+		if(bs == null){
+			canvas.createBufferStrategy(3);
+			return;
+		}
+		
+		/***/
+		
+		//Renderizando Objetos
+		
+		Graphics g = GameMain.image.getGraphics();
+			
+		GameMain.map.render(g);
+		GameMain.p.render(g);
+		
+		/***/
+		
+		g.dispose();
+		g = bs.getDrawGraphics();
+		g.drawImage(GameMain.image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
+		
+		bs.show();
+	}
+}
