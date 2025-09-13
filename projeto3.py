@@ -1,0 +1,5 @@
+numero = int(input("Escreva um numero "))
+print("O numero que você digitou foi: " + str(numero))
+print(str(numero*2))
+print(str(numero*3))
+print(str(numero**0.5))
