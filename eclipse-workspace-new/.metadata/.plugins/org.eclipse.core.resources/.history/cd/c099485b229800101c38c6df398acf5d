@@ -1,0 +1,291 @@
+package com.main;
+
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+
+import javax.swing.JFrame;
+
+import com.graphics.Camera;
+import com.graphics.Spritegetter;
+import com.map.Map;
+import com.player.Player;
+
+public class GameMain extends Canvas implements Runnable,KeyListener,MouseListener,MouseMotionListener{
+
+	private static final long serialVersionUID = 1L;
+	private static JFrame frame;
+	private boolean isRunning;
+	private Thread thread;
+	public static Render r;
+	public static Tick t;
+	public static Spritegetter sg;
+	public static Map map;
+	public static Player p;
+	public static Camera cam;
+	public static BufferedImage image;
+	public static final int WIDTH = 960; //(Mapping coords)*16
+	public static final int HEIGHT = 640;
+	public static final int SCALE = 3;
+
+
+	public static void main(String[] args) {
+		GameMain game = new GameMain();
+		game.start();
+
+	}
+
+	public GameMain(){
+		addKeyListener(this);
+		addMouseListener(this);
+		addMouseMotionListener(this);
+		setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
+		initFrame();
+		
+		//Inicializando Objetos 
+		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
+		t = new Tick();
+		r = new Render(this);
+		sg = new Spritegetter("/spritesheet.png");
+		map = new Map("/mapping.png");
+		p = new Player(128, 128, sg.getSprite(0, 0, 16, 52));
+		cam = new Camera();
+		System.out.println("Mapa inicializado");
+	}
+	
+	public void initFrame(){
+		frame = new JFrame("Nome Provisorio");
+		frame.add(this);
+		frame.setUndecorated(true);
+		frame.setResizable(false);
+		frame.pack();
+		frame.setAlwaysOnTop(true);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+	
+	public synchronized void start(){
+		thread = new Thread(this);
+		isRunning = true;
+		thread.start();
+	}
+	
+	public synchronized void stop(){
+		isRunning = false;
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void run() {
+		requestFocus();
+		long lastTime = System.nanoTime();
+		double amountOfTicks = 60.0;
+		double ns = 1000000000 / amountOfTicks;
+		double delta = 0;
+		int frames = 0;
+		double timer = System.currentTimeMillis();
+		requestFocus();
+		while(isRunning){
+			long now = System.nanoTime();
+			delta+= (now - lastTime) / ns;
+			lastTime = now;
+			if(delta >= 1) {
+				t.tick();
+				r.render();
+				frames++;
+				delta--;
+			}
+			
+			if(System.currentTimeMillis() - timer >= 1000){
+				//System.out.println("FPS: "+ frames);
+				frames = 0;
+				timer+=1000;
+			}
+			
+		}
+		
+		stop();
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+		if(e.KEY_PRESSED() == 1)
+			cam.setMooving(true);
+		else
+			cam.setMooving(false);
+		
+		switch(e.getKeyCode()) { // CIMA E BAIXO
+		
+		case KeyEvent.VK_S:
+			
+			p.setY((int)(p.getY()+p.getSpeed()));
+			if(cam.isCaptY())
+				cam.setY((int)(cam.getY()+p.getSpeed()/3));
+			else
+				cam.setY((int)(cam.getY()+p.getSpeed()));
+			
+		break;
+
+		case KeyEvent.VK_W:
+			
+			p.setY((int)(p.getY()-p.getSpeed()));
+			if(cam.isCaptY())
+				cam.setY((int)(cam.getY()-p.getSpeed()/3));
+			else
+				cam.setY((int)(cam.getY()-p.getSpeed()));			
+			
+		break;
+		
+		case KeyEvent.VK_UP:
+			
+			p.setY((int)(p.getY()-p.getSpeed()));
+			if(cam.isCaptY())
+				cam.setY((int)(cam.getY()-p.getSpeed()/3));
+			else
+				cam.setY((int)(cam.getY()-p.getSpeed()));
+		break;
+		
+		case KeyEvent.VK_DOWN:
+			
+			p.setY((int)(p.getY()+p.getSpeed()));
+			if(cam.isCaptY())
+				cam.setY((int)(cam.getY()+p.getSpeed()/3));
+			else
+				cam.setY((int)(cam.getY()+p.getSpeed()));
+			
+		break;
+		
+		}
+		
+		switch(e.getKeyCode()) { //ESQUERDA E DIREITA
+		
+		case KeyEvent.VK_A:
+			
+			p.setX((int)(p.getX()-p.getSpeed()));
+			if(cam.isCaptX())
+				cam.setX((int)(cam.getX()-p.getSpeed()/3));
+			else
+				cam.setX((int)(cam.getX()-p.getSpeed()));
+		break;
+		
+		case KeyEvent.VK_D:
+				
+			p.setX((int)(p.getX()+p.getSpeed()));
+			if(cam.isCaptX())
+				cam.setX((int)(cam.getX()+p.getSpeed()/3));
+			else
+				cam.setX((int)(cam.getX()+p.getSpeed()));
+			
+		break;
+		
+		case KeyEvent.VK_LEFT:
+			
+			p.setX((int)(p.getX()-p.getSpeed()));
+			if(cam.isCaptX())
+				cam.setX((int)(cam.getX()-p.getSpeed()/3));
+			else
+				cam.setX((int)(cam.getX()-p.getSpeed()));
+			
+		break;
+		
+		case KeyEvent.VK_RIGHT:
+			
+			p.setX((int)(p.getX()+p.getSpeed()));
+			if(cam.isCaptX())
+				cam.setX((int)(cam.getX()+p.getSpeed()/3));
+			else
+				cam.setX((int)(cam.getX()+p.getSpeed()));
+		break;		
+		
+		}
+		
+	
+		
+		//Barreira da Camera
+		if(cam.getX() <= 0) {
+			cam.setX(0);
+		}else if(cam.getX() >= (GameMain.WIDTH/GameMain.SCALE)) {
+			cam.setX(GameMain.WIDTH/GameMain.SCALE);
+		}
+		if(cam.getY() <= 0) {
+			cam.setY(0);
+		}else if(cam.getY() >= (GameMain.HEIGHT/GameMain.SCALE)) {
+			cam.setY(GameMain.HEIGHT/GameMain.SCALE);
+		}
+		//Barreira do Player
+		if(p.getX() <= 0) 
+			p.setX(0);
+		else if(p.getX() >= GameMain.WIDTH-p.PLAYER_WIDTH)
+			p.setX(GameMain.WIDTH-p.PLAYER_WIDTH);
+		if(p.getY() <= 0) 
+			p.setY(0);
+		else if(p.getY() >= GameMain.HEIGHT-119)
+			p.setY(GameMain.HEIGHT-(119));
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

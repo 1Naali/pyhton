@@ -1,0 +1,18 @@
+package com.main;
+
+public class Tick {
+	
+	private int f = 0;
+
+	public void tick() {
+		
+		GameMain.map.tick();
+		GameMain.cam.tick();
+		GameMain.p.tick();
+		
+		
+		System.out.println("Py : "+GameMain.p.getY()/GameMain.SCALE);
+		System.out.println("Px : "+GameMain.p.getX()/GameMain.SCALE);
+		
+	}
+}

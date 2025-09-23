@@ -1,0 +1,68 @@
+package com.graphics;
+
+import com.main.GameMain;
+
+public class Camera {
+
+	private int x, y;
+	public boolean isCaptX() {
+		return captX;
+	}
+
+	public void setCaptX(boolean captX) {
+		this.captX = captX;
+	}
+
+	public boolean isCaptY() {
+		return captY;
+	}
+
+	public void setCaptY(boolean captY) {
+		this.captY = captY;
+	}
+
+	private boolean captX,captY;
+
+	public Camera() {
+		x = 0;
+		y = 0;
+	}
+
+	public void tick() {
+		
+		if(
+			(x < GameMain.p.getX()/GameMain.SCALE + 1 && x < 64) ||
+			(x > GameMain.p.getX()/GameMain.SCALE - 17 && x > GameMain.WIDTH/GameMain.SCALE - 64) ||
+			(x < GameMain.p.getX()/GameMain.SCALE - 1 && x > (GameMain.WIDTH/GameMain.SCALE)-64)
+		  )
+			captX = true;
+		else
+			captX = false;
+		
+		if(
+			(y < GameMain.p.getY()/GameMain.SCALE + 1 && y < 32) ||
+			(y > GameMain.p.getY()/GameMain.SCALE - 65 && x > GameMain.HEIGHT/GameMain.SCALE-32) ||
+			(y < GameMain.p.getY()/GameMain.SCALE - 1 && x > (GameMain.HEIGHT/GameMain.SCALE)-32)
+		  )
+				captY = true;
+			else
+				captY = false;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+}

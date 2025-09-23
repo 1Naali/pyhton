@@ -1,0 +1,16 @@
+package com.main;
+
+public class Tick {
+
+	public void tick() {
+		
+		GameMain.map.tick();
+		GameMain.cam.tick();
+		GameMain.p.tick();
+		
+		System.out.println("Py : "+GameMain.p.getY()/GameMain.SCALE);
+		System.out.println("CamX : "+GameMain.cam.getX());
+		System.out.println("teste : "+(GameMain.HEIGHT/GameMain.SCALE-GameMain.p.PLAYER_HEIGHT));
+		
+	}
+}

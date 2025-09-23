@@ -1,0 +1,24 @@
+package com.main;
+
+public class Tick {
+	
+	private int f = 0;
+
+	public void tick() {
+		
+		GameMain.map.tick();
+		GameMain.cam.tick();
+		GameMain.p.tick();
+		
+		/*
+		f++;
+		if(f >= 60) {
+			System.out.println("Py : "+GameMain.p.getY());
+			System.out.println("Px : "+GameMain.p.getX());
+			System.out.println("By : "+(GameMain.HEIGHT-(GameMain.p.PLAYER_HEIGHT)));
+			f=0;
+		}*/
+		
+		
+	}
+}

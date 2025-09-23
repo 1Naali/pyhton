@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Encapsulate field &apos;com.main.Tick.mov&apos; in &apos;com.main.Tick&apos;&#x0D;&#x0A;- Original project: &apos;DoZero&apos;&#x0D;&#x0A;- Original element: &apos;com.main.Tick.mov&apos;&#x0D;&#x0A;- Getter method name: &apos;getMov&apos;&#x0D;&#x0A;- Setter method name: &apos;setMov&apos;&#x0D;&#x0A;- Field visibility: &apos;public&apos;&#x0D;&#x0A;- Use getter and setter methods in declaring type" comments="false" declaring="true" description="Encapsulate field &apos;mov, ...&apos;" flags="589830" getter="getMov" id="org.eclipse.jdt.ui.self.encapsulate" input="/src&lt;com.main{Tick.java[Tick^mov" insertion="0" setter="setMov" stamp="1758593553136" version="1.0" visibility="1"/>
+</session>

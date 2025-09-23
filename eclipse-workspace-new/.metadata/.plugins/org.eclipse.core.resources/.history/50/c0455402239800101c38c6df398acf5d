@@ -1,0 +1,39 @@
+package com.main;
+
+public class Tick {
+	
+	private int f = 0;
+	private int mov;
+
+	public void tick() {
+		
+		GameMain.map.tick();
+		GameMain.cam.tick();
+		GameMain.p.tick();
+		if(mov == 401){
+			GameMain.cam.setMooving(true);
+			mov=0;
+		else{
+			GameMain.cam.setMooving(false);
+			mov=0;
+		}
+		/*
+		f++;
+		if(f >= 60) {
+			System.out.println("Py : "+GameMain.p.getY());
+			System.out.println("Px : "+GameMain.p.getX());
+			System.out.println("By : "+(GameMain.HEIGHT-(GameMain.p.PLAYER_HEIGHT)));
+			f=0;
+		}*/
+		
+		
+	}
+
+	public int getMov() {
+		return mov;
+	}
+
+	public void setMov(int mov) {
+		this.mov = mov;
+	}
+}
